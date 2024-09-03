@@ -1,0 +1,37 @@
+
+spring:
+  application:
+    name: fileRouge
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: user
+    password:
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  mvc:
+    contentnegotiation:
+      favor-path-extension: false
+      favor-parameter: false
+      media-types:
+        json: application/json
+      default-content-type: application/json
+
+server:
+  port: 9090
+
+
