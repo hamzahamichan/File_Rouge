@@ -21,10 +21,12 @@ public class EquipementController {
     }
      @GetMapping("/afficher")
     EquipementDto getEquipementById(@RequestParam Long id){
+
         return this.service.getEquipementById(id);
     }
     @GetMapping("/liste")
     List<Equipement> getAllEquipements(){
+
         return this.service.getAllEquipements();
     }
     @PutMapping("/modifier")
