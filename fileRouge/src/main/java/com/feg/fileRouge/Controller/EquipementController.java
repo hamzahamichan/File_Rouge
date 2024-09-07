@@ -9,6 +9,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+
+//         /api/equipement/ajouter
+//        /api/equipement/afficher
+//       /api/equipement/afficher
+//      /api/equipement/liste
+//     /api/equipement/modifier
+//    /api/equipement/supprimer
+
 @RequestMapping("/api/equipement")
 @RestController
 public class EquipementController {

@@ -53,12 +53,20 @@ public class SalleServiceImpl implements SalleService {
         @Override
         public SallesDto getSalleById(Long id) {
             Optional<Salle> salle = salleRepository.findById(id);
-            return salle.map(salleMapper::toDto).orElse(null);
+            if (salle.isPresent()){
+                return salle.map(salleMapper::toDto).orElse(null);
+            }
+            else
+                return null;
         }
 
         @Override
         public List<Salle> getAllSalles() {
-            return salleRepository.findAll();
+            List<Salle> list = salleRepository.findAll();
+            if (list.isEmpty()){
+                throw new RuntimeException("Liste n'existe pas");
+            }else
+                 return list;
         }
     }
 

@@ -18,10 +18,11 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReservation;
-    private Date dateReservation;
+    private String eventType;
+    private Long nbrParticipants;
+    private String details;
     private Date dateDebut;
-    private Date dateFin;
-    private Double tarifTotal;
+    private Long idSalle;
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "idClient")

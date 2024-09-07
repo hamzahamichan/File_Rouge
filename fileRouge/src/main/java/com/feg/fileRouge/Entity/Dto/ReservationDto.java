@@ -13,7 +13,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class ReservationDto {
     private Long idReservation;
-    private Date dateReservation;
+    private String eventType;
+    private Long nbrParticipants;
+    private String details;
     private Date dateDebut;
-    private Date dateFin;
+    private Long idSalle;
 }

@@ -19,6 +19,7 @@ public class Salle {
     private String description;
     private int capacite;
     private String emplacement;
+    private Double prix;
 
     @OneToMany(mappedBy = "salle")
     private List<Equipement> equipements;

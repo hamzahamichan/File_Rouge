@@ -14,4 +14,8 @@ public interface ReservationService {
     List<Reservation> getAllReservations();
 
     void deleteReservation(Long id);
+
+    Reservation updateResevation(Long id , ReservationDto dto);
+
+    ReservationDto searchReservationByName(String eventType);
 }
