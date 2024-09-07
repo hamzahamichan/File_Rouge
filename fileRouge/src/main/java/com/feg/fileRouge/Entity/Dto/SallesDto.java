@@ -11,5 +11,6 @@ public class SallesDto {
     private String description;
     private int capacite;
     private String emplacement;
+    private Double prix;
 
 }
