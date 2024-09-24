@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+
 public class AuthenticationService {
 
  private final ClientRepository clientRepository;
@@ -24,6 +25,7 @@ public class AuthenticationService {
         var client = Client.builder()
                 .prenom(request.getPrenom())
                 .nom(request.getNom())
+                .email(request.getEmail())
                 .motDePasse(passwordEncoder.encode(request.getMotDePasse()))
                 .role(Role.ADMIN)
                 .build();

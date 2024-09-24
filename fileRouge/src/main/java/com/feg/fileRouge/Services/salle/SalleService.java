@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SalleService {
 
-    ResponseEntity<Salle> save(SallesDto dto);
+       ResponseEntity<Salle> save(SallesDto dto);
 
         SallesDto updateSalle(SallesDto dto);
 
@@ -18,5 +18,7 @@ public interface SalleService {
 
         List<Salle> getAllSalles();
 
+        Long compterSalles();
 
+        List<Salle> searchSalles(String nom, String description, Integer capacite, String emplacement);
 }

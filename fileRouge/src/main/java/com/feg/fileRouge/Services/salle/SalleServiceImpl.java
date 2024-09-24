@@ -68,6 +68,24 @@ public class SalleServiceImpl implements SalleService {
             }else
                  return list;
         }
+
+    @Override
+    public Long compterSalles() {
+        try {
+            Long nombre = salleRepository.count(); // Utilisez Long ici pour correspondre au type de retour
+            return nombre;
+        } catch (Exception e) {
+            // Vous pouvez ajouter une journalisation ici pour suivre l'erreur
+            // Log.error("Erreur lors du comptage des salles", e);
+            throw new RuntimeException("Erreur lors du comptage des salles.", e);
+        }
     }
+
+    @Override
+    public List<Salle> searchSalles(String nom, String description, Integer capacite, String emplacement) {
+            return  this.salleRepository.findByCriteria(nom,description,capacite,emplacement);
+    }
+
+}
 
 

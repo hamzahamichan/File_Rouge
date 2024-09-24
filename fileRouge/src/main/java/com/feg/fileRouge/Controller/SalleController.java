@@ -16,7 +16,7 @@ import java.util.List;
 public class SalleController {
 
 
-    private  final  SalleServiceImpl service;
+    private final SalleServiceImpl service;
 
     public SalleController(SalleServiceImpl service) {
         this.service = service;
@@ -37,17 +37,48 @@ public class SalleController {
 
     @DeleteMapping("/supprimer")
     public void deleteSalle(@RequestParam Long id) {
-     this.service.deleteSalle(id);
+        this.service.deleteSalle(id);
     }
 
     @GetMapping("/salle")
     public SallesDto getSalleById(@RequestParam Long id) {
-      return this.service.getSalleById(id);
+        return this.service.getSalleById(id);
     }
 
     @GetMapping("/salles")
     public List<Salle> getAllSalles() {
 
-      return this.service.getAllSalles();
+        return this.service.getAllSalles();
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> compterSalles() {
+        try {
+            Long nombreSalles = service.compterSalles();
+            return ResponseEntity.ok(nombreSalles);
+        } catch (Exception e) {
+            // En cas d'erreur, on renvoie un statut 500 avec un message d'erreur
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
+        }
+    }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Salle>> searchSalle(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) Integer capacite,
+            @RequestParam(required = false) String emplacement) {
+
+        try {
+            List<Salle> salles = service.searchSalles(nom, description, capacite, emplacement);
+            if (salles.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            return ResponseEntity.ok(salles);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }

@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping("/api/equipement")
 @RestController
 public class EquipementController {
+
   @Autowired
     private EquipementServiceImpl service;
 
