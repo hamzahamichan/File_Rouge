@@ -44,4 +44,8 @@ public class AuthenticationService {
                 .token(jwttoken)
                 .build();
     }
+
+    public boolean emailExists(String email) {
+        return clientRepository.findByEmail(email).isPresent(); // Méthode de votre repository qui vérifie l'existence de l'email
+    }
 }
