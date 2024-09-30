@@ -1,5 +1,6 @@
 package com.feg.fileRouge.Entity.Model;
 
+import com.feg.fileRouge.Enum.StatutOfSalle;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,7 @@ public class Salle {
     private int capacite;
     private String emplacement;
     private Double prix;
+    private StatutOfSalle statut;
 
     @OneToMany(mappedBy = "salle")
     private List<Equipement> equipements;

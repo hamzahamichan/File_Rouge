@@ -25,29 +25,38 @@ public class SalleController {
     @PostMapping(value = "/ajouter")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Salle> save(@RequestBody SallesDto dto) {
-        // Log du DTO reçu pour vérifier les valeurs
-        System.out.println("DTO reçu: " + dto);
-        return this.service.save(dto);
+        try {
+            System.out.println("DTO reçu: " + dto);
+            return this.service.save(dto);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-//    @PutMapping("/modifier")
-//    public SallesDto updateSalle(@RequestBody SallesDto dto) {
-//     return  this.service.updateSalle(dto);
-//    }
+    @PutMapping("/modifier")
+    public SallesDto updateSalle(@RequestBody SallesDto dto) {
+     return  this.service.updateSalle(dto);
+    }
 
     @DeleteMapping("/supprimer")
     public void deleteSalle(@RequestParam Long id) {
-        this.service.deleteSalle(id);
+        try {
+            this.service.deleteSalle(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @GetMapping("/salle")
     public SallesDto getSalleById(@RequestParam Long id) {
-        return this.service.getSalleById(id);
+            return this.service.getSalleById(id);
     }
+
 
     @GetMapping("/salles")
     public List<Salle> getAllSalles() {
-
         return this.service.getAllSalles();
     }
 
@@ -67,16 +76,14 @@ public class SalleController {
     @GetMapping("/search")
     public ResponseEntity<List<Salle>> searchSalle(
             @RequestParam(required = false) String nom,
-            @RequestParam(required = false) String description,
-            @RequestParam(required = false) Integer capacite,
             @RequestParam(required = false) String emplacement) {
 
         try {
-            List<Salle> salles = service.searchSalles(nom, description, capacite, emplacement);
+            List<Salle> salles = service.searchSalles(nom, emplacement);
             if (salles.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
             }
-            return ResponseEntity.ok(salles);
+            return ResponseEntity.status(HttpStatus.OK).body(salles);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }

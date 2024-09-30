@@ -1,5 +1,6 @@
 package com.feg.fileRouge.Entity.Dto;
 
+import com.feg.fileRouge.Enum.StatutOfSalle;
 import lombok.*;
 
 @Data @AllArgsConstructor
@@ -12,5 +13,6 @@ public class SallesDto {
     private int capacite;
     private String emplacement;
     private Double prix;
+    private StatutOfSalle statut;
 
 }

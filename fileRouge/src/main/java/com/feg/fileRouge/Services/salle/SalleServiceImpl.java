@@ -2,6 +2,7 @@ package com.feg.fileRouge.Services.salle;
 
 import com.feg.fileRouge.Entity.Dto.SallesDto;
 import com.feg.fileRouge.Entity.Model.Salle;
+import com.feg.fileRouge.Enum.StatutOfSalle;
 import com.feg.fileRouge.Repository.SalleRepository;
 import com.feg.fileRouge.mapper.SalleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,10 @@ public class SalleServiceImpl implements SalleService {
 
     @Override
     public ResponseEntity<Salle> save(SallesDto dto) {
-        // Log du DTO avant conversion
         System.out.println("DTO avant conversion: " + dto);
-
-        Salle salle = salleMapper.toEntity(dto); // Convertit le DTO en entité
+        Salle salle = salleMapper.toEntity(dto);
+        salle.setStatut(StatutOfSalle.Desponible);// Convertit le DTO en entité
         System.out.println("Entité Salle créée: " + salle); // Log de l'entité avant sauvegarde
-
         Salle savedSalle = salleRepository.save(salle); // Sauvegarde l'entité en base de données
         return ResponseEntity.status(HttpStatus.CREATED).body(savedSalle); // Retourne la réponse avec le statut 201
     }
@@ -50,17 +49,20 @@ public class SalleServiceImpl implements SalleService {
             salleRepository.deleteById(id);
         }
 
-        @Override
-        public SallesDto getSalleById(Long id) {
-            Optional<Salle> salle = salleRepository.findById(id);
-            if (salle.isPresent()){
-                return salle.map(salleMapper::toDto).orElse(null);
-            }
-            else
-                return null;
+    @Override
+    public SallesDto getSalleById(Long id) {
+        Optional<Salle> salle = salleRepository.findById(id);
+        if (salle.isPresent()) {
+            SallesDto salleDto = salleMapper.toDto(salle.get());
+            System.out.println("DTO généré: " + salleDto);  // Debug
+            return salleDto;
+        } else {
+            return null;
         }
+    }
 
-        @Override
+
+    @Override
         public List<Salle> getAllSalles() {
             List<Salle> list = salleRepository.findAll();
             if (list.isEmpty()){
@@ -75,15 +77,19 @@ public class SalleServiceImpl implements SalleService {
             Long nombre = salleRepository.count(); // Utilisez Long ici pour correspondre au type de retour
             return nombre;
         } catch (Exception e) {
-            // Vous pouvez ajouter une journalisation ici pour suivre l'erreur
-            // Log.error("Erreur lors du comptage des salles", e);
+
             throw new RuntimeException("Erreur lors du comptage des salles.", e);
         }
     }
 
     @Override
-    public List<Salle> searchSalles(String nom, String description, Integer capacite, String emplacement) {
-            return  this.salleRepository.findByCriteria(nom,description,capacite,emplacement);
+    public List<Salle> searchSalles(String nom,String emplacement) {
+            try {
+                return  this.salleRepository.findByCriteria(nom,emplacement);
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
     }
 
 }

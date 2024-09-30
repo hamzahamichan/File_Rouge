@@ -20,5 +20,5 @@ public interface SalleService {
 
         Long compterSalles();
 
-        List<Salle> searchSalles(String nom, String description, Integer capacite, String emplacement);
+        List<Salle> searchSalles(String nom, String emplacement);
 }
