@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ADMIN
+      POSTGRES_DB: saphirsalle
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Ajoutez un volume pour la persistance des données
+
+  file-rouge-app:
+    build: .
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/saphirsalle
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ADMIN
+    ports:
+      - "9090:9090"
+
+volumes:
+  postgres_data:  # Volume pour la base de données PostgreSQL
