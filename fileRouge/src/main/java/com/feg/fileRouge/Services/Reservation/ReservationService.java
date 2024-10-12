@@ -18,4 +18,7 @@ public interface ReservationService {
     Reservation updateResevation(Long id , ReservationDto dto);
 
     ReservationDto searchReservationByName(String eventType);
+
+    List<Reservation> findBySalle(Long idSalle);
+
 }

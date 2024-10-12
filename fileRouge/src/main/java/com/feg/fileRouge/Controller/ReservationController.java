@@ -1,10 +1,14 @@
 package com.feg.fileRouge.Controller;
 
 import com.feg.fileRouge.Entity.Dto.ReservationDto;
+import com.feg.fileRouge.Entity.Model.Client;
 import com.feg.fileRouge.Entity.Model.Reservation;
 import com.feg.fileRouge.Services.Reservation.ReservationServiceImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 ///api/reservation/faire
 //api/reservation/afficher
@@ -27,6 +31,7 @@ public class ReservationController {
         return this.service.save(reservationDto);
     }
 
+
     @GetMapping("/afficher")
     public ReservationDto afficherReservationId(@RequestParam Long id){
         return this.service.getReservationById(id);
@@ -41,4 +46,18 @@ public class ReservationController {
     public void supprimerReservation(@RequestParam Long id){
         this.service.deleteReservation(id);
     }
-}
+
+
+    @GetMapping("/all")
+    List<Reservation> getAllReservations() {
+            return this.service.getAllReservations();
+    }
+
+    @GetMapping("/salle/{idSalle}")
+    public ResponseEntity<List<Reservation>> getReservationsBySalle(
+            @PathVariable Long idSalle ) {  // Récupération de l'admin connecté
+        List<Reservation> reservations = service.findBySalle(idSalle);
+        return ResponseEntity.ok(reservations);
+    }
+
+    }

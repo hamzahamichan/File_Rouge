@@ -1,28 +1,20 @@
-
 spring:
   application:
     name: fileRouge
-
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: user
-    password:
-    driver-class-name: org.h2.Driver
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
+    url: jdbc:postgresql://localhost:5432/saphirsalle
+    username: postgres
+    password: ADMIN
+    driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         format_sql: true
-
+        jdbc.time_zone: UTC
   mvc:
     contentnegotiation:
       favor-path-extension: false
@@ -31,6 +23,15 @@ spring:
         json: application/json
       default-content-type: application/json
 
+      spring:
+        jpa:
+          open-in-view=false:
+
 server:
   port: 9090
-
+  main:
+     log-startup-info: true
+  logging:
+     level:
+        org:
+          springframework: DEBUG

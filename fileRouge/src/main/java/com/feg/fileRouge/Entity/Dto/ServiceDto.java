@@ -13,4 +13,5 @@ public class ServiceDto {
     private Long idService;
     private String nom;
     private String description;
+    private Long idSalle;
 }

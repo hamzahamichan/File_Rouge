@@ -4,8 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +15,7 @@ public class ReservationDto {
     private String eventType;
     private Long nbrParticipants;
     private String details;
-    private Date dateDebut;
+    private LocalDateTime dateDeFin;
+    private LocalDateTime dateDebut;
     private Long idSalle;
 }

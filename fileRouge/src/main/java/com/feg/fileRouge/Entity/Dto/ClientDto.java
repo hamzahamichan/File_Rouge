@@ -26,5 +26,8 @@ public class ClientDto {
     @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères.")
     private String motDePasse;
 
+    @Size(min=10, max=10, message = "Le numéro de téléphone doit contenir 10 caractères.")
+    private String numberPhone;
+
     private Role role;
 }

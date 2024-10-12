@@ -1,5 +1,6 @@
 package com.feg.fileRouge.Config;
 
+import com.feg.fileRouge.Entity.Model.Client;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,11 +27,16 @@ public class JwtService {
     }
 
     // Générer un token JWT
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        // Ajouter les rôles dans les claims
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, Long idClient) {
+        Client client = (Client) userDetails; // Assurez-vous que userDetails est une instance de Client
+        // Ajouter les claims supplémentaires
+        extraClaims.put("idClient", idClient);
+        extraClaims.put("nom", client.getNom()); // Récupère le nom
+        extraClaims.put("prenom", client.getPrenom()); // Récupère le prénom
         extraClaims.put("roles", userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList()); // Convertir les rôles en liste de chaînes
+
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
@@ -39,6 +45,7 @@ public class JwtService {
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     // Extraire tous les claims du token
     private Claims extractAllClaims(String token) {
@@ -55,8 +62,9 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(UserDetails userDetails, Long idClient) {
+        Map<String, Object> extraClaims = new HashMap<>();
+        return generateToken(extraClaims, userDetails, idClient);
     }
 
     // Valider le token

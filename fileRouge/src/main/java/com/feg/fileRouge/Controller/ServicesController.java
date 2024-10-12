@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/services")
 public class ServicesController {
@@ -15,12 +17,17 @@ public class ServicesController {
     private final ServicesserviceImp service;
 
     public ServicesController(ServicesserviceImp service) {
+
         this.service = service;
     }
-    @PostMapping("/ajouter")
-    public ResponseEntity<Service> addService(@RequestBody ServiceDto dto) {
+
+
+    @PostMapping("/ajouter/{idSalle}")
+    public ResponseEntity<Service> addService(@PathVariable Long idSalle, @RequestBody ServiceDto dto) {
+        dto.setIdSalle(idSalle);
         return this.service.addService(dto);
     }
+
 
     @GetMapping("/afficher")
     public ServiceDto findServiceId(@RequestParam Long id) {
@@ -38,12 +45,13 @@ public class ServicesController {
     }
 
     @GetMapping("/afficherAll")
-    public Service getAllService() {
-        return null;
+    public List<Service> getAllService() {
+        return this.service.getAllService();
     }
 
     @DeleteMapping
     public void deleteService(@RequestParam Long id){
+
         this.service.delete(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.feg.fileRouge.Repository;
 
+import com.feg.fileRouge.Entity.Model.Client;
 import com.feg.fileRouge.Entity.Model.Salle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,6 @@ public interface SalleRepository extends JpaRepository<Salle,Long> {
             "(:emplacement IS NULL OR s.emplacement LIKE %:emplacement%)")
     List<Salle> findByCriteria(@Param("nom") String nom,
                                @Param("emplacement") String emplacement);
+
+    List<Salle> findByClient(Client client);
 }

@@ -8,17 +8,19 @@ import java.util.List;
 
 public interface SalleService {
 
-       ResponseEntity<Salle> save(SallesDto dto);
+ ResponseEntity<Salle> save(SallesDto dto);
 
-        SallesDto updateSalle(SallesDto dto);
+ SallesDto updateSalle(SallesDto dto);
 
-        void deleteSalle(Long id);
+ ResponseEntity<Void> deleteSalle(Long id);
 
-        SallesDto getSalleById(Long id);
+ SallesDto getSalleById(Long id);
 
-        List<Salle> getAllSalles();
+ List<Salle> getAllSalle();
+ // Méthode pour récupérer toutes les salles
+ List<Salle> getAllSalles(Long idClient);// Ajoutez idClient ici
 
-        Long compterSalles();
+ Long compterSalles(Long idClient);
 
-        List<Salle> searchSalles(String nom, String emplacement);
+ List<Salle> searchSalles(String nom, String emplacement);
 }
