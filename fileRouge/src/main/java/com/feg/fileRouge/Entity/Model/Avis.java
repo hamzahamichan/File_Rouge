@@ -17,6 +17,8 @@ public class Avis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAvis;
     private String commentaire;
+    private String email;
+    private String nomComplet;
     private int note;
 
     @ManyToOne
