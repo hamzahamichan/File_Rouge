@@ -5,14 +5,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,14 +38,26 @@ public class Client implements UserDetails {
     @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères.")
     private String motDePasse;
 
+    @Size(min=10, max=10, message = "Le numéro de téléphone doit contenir 10 caractères.")
+    private String numberPhone;
+
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
     @OneToMany(mappedBy = "client")
     private List<Reservation> reservations;
 
     @OneToMany(mappedBy = "client")
     private List<Avis> avis;
+
+    // Relation OneToMany avec Salle
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    private List<Salle> salles = new ArrayList<>();
+
+
+
 
 
     @Override
