@@ -1,16 +1,19 @@
 package com.feg.fileRouge.Entity.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.feg.fileRouge.Enum.StatutOfSalle;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
-
-@Entity @Data @Builder
+@Entity
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class Salle {
 
     @Id
@@ -21,9 +24,14 @@ public class Salle {
     private int capacite;
     private String emplacement;
     private Double prix;
+    @ElementCollection
+    private List<String> services;
+
+    @Enumerated(EnumType.STRING)
     private StatutOfSalle statut;
 
     @OneToMany(mappedBy = "salle")
+    @JsonIgnore
     private List<Equipement> equipements;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -34,5 +42,15 @@ public class Salle {
     private List<Avis> avis;
 
     @OneToMany(mappedBy = "salle")
+    @JsonIgnore
     private List<Reservation> reservations;
+
+
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "id_client")
+    @ToString.Exclude
+    private Client client;
+
 }
