@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -21,7 +21,8 @@ public class Reservation {
     private String eventType;
     private Long nbrParticipants;
     private String details;
-    private Date dateDebut;
+    private LocalDateTime dateDebut;
+    private LocalDateTime dateDeFin;
     private Long idSalle;
 
     @ManyToOne
